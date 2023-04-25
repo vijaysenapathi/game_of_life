@@ -2,40 +2,24 @@
 #define GL_SILENCE_DEPRECATION
 #endif
 
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
+#include "graphics/windows.h"
 
-int main(void)
-{
-  GLFWwindow* window;
-
-  /* Initialize the library */
-  if (!glfwInit())
-    return -1;
-
-  /* Create a windowed mode window and its OpenGL context */
-  window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-  if (!window)
-  {
-    glfwTerminate();
-    return -1;
-  }
-
-  /* Make the window's context current */
-  glfwMakeContextCurrent(window);
+int main(void) {
+  Window *window = window_create("Game of Life", 800, 600);
 
   /* Loop until the user closes the window */
-  while (!glfwWindowShouldClose(window))
-  {
+  while (!glfwWindowShouldClose(window->window)) {
     /* Render here */
     glClear(GL_COLOR_BUFFER_BIT);
 
     /* Swap front and back buffers */
-    glfwSwapBuffers(window);
+    glfwSwapBuffers(window->window);
 
     /* Poll for and process events */
     glfwPollEvents();
   }
 
-  glfwTerminate();
+  window_destroy(window);
   return 0;
 }
